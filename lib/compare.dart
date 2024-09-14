@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-import 'dart:ui';
+// import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +12,6 @@ class CompareScreenGenerator extends StatefulWidget {
 }
 
 class _CompareScreenState extends State<CompareScreenGenerator> {
-  // final List<Map<String, dynamic>> _comparisonData = [
   final List<Map<String, dynamic>> _comparisonData = [
     {
       "Candidate1": {
@@ -125,7 +124,8 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Presidential Candidates Comparison'),
+        title: Text('Compare Candidates'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

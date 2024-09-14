@@ -51,10 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
     const CompareScreen(),
   ];
 
-  final List<String> _titles = [
-    'Home',
-    'Compare',
-  ];
+  // final List<String> _titles = [
+  //   'Home',
+  //   'Compare',
+  // ];
 
   void _onTabSelected(int index) {
     setState(() {
