@@ -12,10 +12,10 @@ class ChatBotPanelGenerator extends StatefulWidget {
 class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   final TextEditingController _chatController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  List<Map<String, dynamic>> _chatHistory = [];
+  final List<Map<String, dynamic>> _chatHistory = [];
 
   void getAnswer() async {
-    final url =
+    const url =
         "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
     final uri = Uri.parse(url);
     List<Map<String, String>> msg = [];
@@ -59,7 +59,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
       ),
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             //get max height
             height: MediaQuery.of(context).size.height - 160,
             child: ListView.builder(
@@ -71,7 +71,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
               itemBuilder: (context, index) {
                 return Container(
                   padding:
-                      EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                      const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
                   child: Align(
                     alignment: (_chatHistory[index]["isSender"]
                         ? Alignment.topRight
@@ -91,7 +91,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
                             ? Colors.blue[100]
                             : Colors.white),
                       ),
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(_chatHistory[index]["message"],
                           style: TextStyle(
                               fontSize: 15,
@@ -182,7 +182,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
 
 class GradientText extends StatelessWidget {
   const GradientText(
-    this.text, {
+    this.text, {super.key, 
     required this.gradient,
     this.style,
   });

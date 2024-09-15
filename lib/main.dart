@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   // state and logic
+  @override
   notifyListeners();
 }
 
@@ -74,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.black.withOpacity(0.2),
               ),
             ),
-            Align(
+            const Align(
               alignment: Alignment.bottomRight,
               child: FractionallySizedBox(
                 widthFactor: 0.4,
@@ -117,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('LLMinators'),
+          title: const Text('LLMinators'),
           actions: <Widget>[
             TextButton(
               // style: style,

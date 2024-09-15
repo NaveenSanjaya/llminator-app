@@ -62,7 +62,7 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
   void _fetchComparisonData(List<String> candidates) async {
     try {
       final response = await http.post(
-        Uri.parse(apiUrl + '/compare'),
+        Uri.parse('$apiUrl/compare'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({"candidates": candidates}),
       );
@@ -98,16 +98,16 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
 
   Widget _buildComparisonTable() {
     if (_comparisonData.isEmpty) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
           columns: [
-            DataColumn(label: Text('Category')),
+            const DataColumn(label: Text('Category')),
             DataColumn(label: Text(_comparisonNames[0])),
             DataColumn(label: Text(_comparisonNames[1])),
-            DataColumn(label: Text('Better')),
+            const DataColumn(label: Text('Better')),
           ],
           rows: List<DataRow>.generate(
               (_comparisonCategories.length),
@@ -124,7 +124,7 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compare Candidates'),
+        title: const Text('Compare Candidates'),
         centerTitle: true,
       ),
       body: Padding(
@@ -138,8 +138,8 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
                   value: _selectedCandidate1,
                   items: _comparisonNames
                       .map((e) => DropdownMenuItem(
-                            child: Text(e),
                             value: e,
+                            child: Text(e),
                           ))
                       .toList(),
                   onChanged: (value) {
@@ -153,8 +153,8 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
                   value: _selectedCandidate2,
                   items: _comparisonNames
                       .map((e) => DropdownMenuItem(
-                            child: Text(e),
                             value: e,
+                            child: Text(e),
                           ))
                       .toList(),
                   onChanged: (value) {

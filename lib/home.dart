@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreenGenerator> {
 
   Future<void> _fetchWinPrediction() async {
     try {
-      final response = await http.get(Uri.parse(apiUrl + '/win-prediction'));
+      final response = await http.get(Uri.parse('$apiUrl/win-prediction'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreenGenerator> {
             title:
                 'Candidate 1\n${candidate1WinPercentage.toStringAsFixed(1)}%',
             radius: 100,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           PieChartSectionData(
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreenGenerator> {
             title:
                 'Candidate 2\n${candidate2WinPercentage.toStringAsFixed(1)}%',
             radius: 100,
-            titleStyle: TextStyle(
+            titleStyle: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ],
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreenGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Win Pediction'),
+        title: const Text('Win Pediction'),
         centerTitle: true,
       ),
       body: _buildPieChart(),
