@@ -15,8 +15,8 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   List<Map<String, dynamic>> _chatHistory = [];
 
   void getAnswer() async {
-    final url =
-        "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
+    final url = "https://d0b7-34-106-77-139.ngrok-free.app";
+    // "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
     final uri = Uri.parse(url);
     List<Map<String, String>> msg = [];
     for (var i = 0; i < _chatHistory.length; i++) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
 
@@ -44,16 +45,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Image bgimage = Image.asset('assets/bg.jpg');
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    const HomeScreen(),
     const CompareScreen(),
+    // const HomeScreen(),
   ];
 
   // final List<String> _titles = [
-  //   'Home',
-  //   'Compare',
+  //   'Dashboard',
+  //   'Comparison',
   // ];
 
   void _onTabSelected(int index) {
@@ -117,19 +119,28 @@ class _MyHomePageState extends State<MyHomePage> {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('LLMinators'),
-          actions: <Widget>[
-            TextButton(
-              // style: style,
-              onPressed: () => _onTabSelected(0),
-              child: const Text('Dashboard'),
-            ),
-            TextButton(
-              // style: style,
-              onPressed: () => _onTabSelected(1),
-              child: const Text('Compare'),
-            ),
-          ],
+          title: Text('LLMinators Election Prediction'),
+          // actions: <Widget>[
+          //   TextButton(
+          //     // style: style,
+          //     onPressed: () => _onTabSelected(0),
+          //     child: const Text('Dashboard'),
+          //   ),
+          //   TextButton(
+          //     // style: style,
+          //     // onPressed: () => _onTabSelected(1),
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) =>
+          //               CompareScreenGenerator(scrollToComparison: true),
+          //         ),
+          //       );
+          //     },
+          //     child: const Text('Candidate Comparison'),
+          //   ),
+          // ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showChatBotPanel(context),
