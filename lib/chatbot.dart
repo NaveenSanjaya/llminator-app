@@ -15,38 +15,105 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   final List<Map<String, dynamic>> _chatHistory = [];
 
   void getAnswer() async {
-    const url =
-        "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
-    final uri = Uri.parse(url);
-    List<Map<String, String>> msg = [];
-    for (var i = 0; i < _chatHistory.length; i++) {
-      msg.add({"content": _chatHistory[i]["message"]});
+  String userMessage = _chatHistory.last["message"]; // Get the user's last message
+
+  const url = "http://d0b7-34-106-77-139.ngrok-free.app/ask"; // Your ngrok URL
+  final uri = Uri.parse(url);
+  final payload = {"question": userMessage}; // Payload containing the user's message
+
+  try {
+    final response = await http.post(
+      uri,
+      body: jsonEncode(payload),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      setState(() {
+        // Add the chatbot's reply to the chat history
+        _chatHistory.add({
+          "time": DateTime.now(),
+          "message": responseBody["answer"], // Get the 'answer' from the response
+          "isSender": false,
+        });
+      });
+    } else {
+      setState(() {
+        _chatHistory.add({
+          "time": DateTime.now(),
+          "message": "Error: ${response.statusCode} - ${response.reasonPhrase}",
+          "isSender": false,
+        });
+      });
     }
-
-    Map<String, dynamic> request = {
-      "prompt": {
-        "messages": [msg]
-      },
-      "temperature": 0.25,
-      "candidateCount": 1,
-      "topP": 1,
-      "topK": 1
-    };
-
-    final response = await http.post(uri, body: jsonEncode(request));
-
+  } catch (e) {
     setState(() {
       _chatHistory.add({
         "time": DateTime.now(),
-        "message": json.decode(response.body)["candidates"][0]["content"],
+        "message": "Exception: $e",
         "isSender": false,
       });
     });
-
-    _scrollController.jumpTo(
-      _scrollController.position.maxScrollExtent,
-    );
   }
+
+  // Scroll to the bottom to show the latest message
+  _scrollController.jumpTo(
+    _scrollController.position.maxScrollExtent,
+  );
+}
+
+
+
+
+
+  // void getAnswer() async {
+  //   const url =
+  //       "https://d0b7-34-106-77-139.ngrok-free.app/ask"; // Replace with your ngrok public URL
+  //   final uri = Uri.parse(url);
+  //   final payload = {"question": _chatHistory.last["message"]};
+
+  //   try {
+  //     final response = await http.post(
+  //       uri,
+  //       body: jsonEncode(payload),
+  //       headers: {"Content-Type": "application/json"},
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final responseBody = json.decode(response.body);
+  //       setState(() {
+  //         _chatHistory.add({
+  //           "time": DateTime.now(),
+  //           "message": responseBody["answer"],
+  //           "isSender": false,
+  //         });
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _chatHistory.add({
+  //           "time": DateTime.now(),
+  //           "message":
+  //               "Error: ${response.statusCode} - ${response.reasonPhrase}",
+  //           "isSender": false,
+  //         });
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       _chatHistory.add({
+  //         "time": DateTime.now(),
+  //         "message": "Exception: $e",
+  //         "isSender": false,
+  //       });
+  //     });
+  //   }
+
+  //   _scrollController.jumpTo(
+  //     _scrollController.position.maxScrollExtent,
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +137,8 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Container(
-                  padding:
-                      const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 10, bottom: 10),
                   child: Align(
                     alignment: (_chatHistory[index]["isSender"]
                         ? Alignment.topRight
@@ -182,7 +249,8 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
 
 class GradientText extends StatelessWidget {
   const GradientText(
-    this.text, {super.key, 
+    this.text, {
+    super.key,
     required this.gradient,
     this.style,
   });

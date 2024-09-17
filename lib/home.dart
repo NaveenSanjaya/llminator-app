@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class HomeScreenGenerator extends StatefulWidget {
   const HomeScreenGenerator({super.key});
 
@@ -73,17 +74,48 @@ class _HomeScreenState extends State<HomeScreenGenerator> {
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: const Text('Win Pediction'),
+  //       centerTitle: true,
+  //     ),
+  //     body: _buildPieChart(),
+  //     // body: Center(
+  //     //   child: isLoading ? CircularProgressIndicator() : _buildPieChart(),
+  //     // ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Win Pediction'),
+        title: const Text('Win Prediction'),
         centerTitle: true,
       ),
-      body: _buildPieChart(),
-      // body: Center(
-      //   child: isLoading ? CircularProgressIndicator() : _buildPieChart(),
-      // ),
+      body: Column(
+        children: <Widget>[
+          // Use Expanded to take up available space
+          Expanded(
+            child: _buildPieChart(),
+          ),
+
+          // Add some spacing between the pie chart and the button
+          const SizedBox(height: 20),
+
+          // Button to upload JSON data
+          // ElevatedButton(
+          //   onPressed: () {
+          //     uploadJsonData();
+          //   },
+          //   child: const Text('Upload JSON Data'),
+          // ),
+
+          const SizedBox(height: 20), // Additional spacing if needed
+        ],
+      ),
     );
   }
 }

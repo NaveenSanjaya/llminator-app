@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
@@ -6,7 +7,24 @@ import 'package:llminator/chatbot.dart';
 import 'package:llminator/home.dart';
 import 'package:llminator/compare.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Replace this with your web app's Firebase configuration
+  const firebaseConfig = FirebaseOptions(
+      apiKey: "AIzaSyAiBTHxLivQAvF4CdEWUWFFtHj_75HGVUQ",
+      authDomain: "right-vote.firebaseapp.com",
+      projectId: "right-vote",
+      storageBucket: "right-vote.appspot.com",
+      messagingSenderId: "1004974536938",
+      appId: "1:1004974536938:web:23114a1cb316d1b5aabf93",
+      measurementId: "G-8VS4434J1T");
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: firebaseConfig,
+  );
+
   runApp(const MyApp());
 }
 
@@ -52,11 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
     const CompareScreen(),
   ];
 
-  // final List<String> _titles = [
-  //   'Home',
-  //   'Compare',
-  // ];
-
   void _onTabSelected(int index) {
     setState(() {
       _currentIndex = index;
@@ -90,26 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
-
-    // Navigator.of(context).push(
-    //   PageRouteBuilder(
-    //     pageBuilder: (context, animation, secondaryAnimation) => ChatBotPanel(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //       const begin = Offset(1.0, 0);
-    //       const end = Offset(0.5, 0);
-    //       const curve = Curves.easeInOut;
-
-    //       var tween =
-    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-    //       var offsetAnimation = animation.drive(tween);
-
-    //       return SlideTransition(
-    //         position: offsetAnimation,
-    //         child: child,
-    //       );
-    //     },
-    //   ),
-    // );
   }
 
   @override
@@ -121,12 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('LLMinators'),
           actions: <Widget>[
             TextButton(
-              // style: style,
               onPressed: () => _onTabSelected(0),
               child: const Text('Dashboard'),
             ),
             TextButton(
-              // style: style,
               onPressed: () => _onTabSelected(1),
               child: const Text('Compare'),
             ),
