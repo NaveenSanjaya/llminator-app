@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'dart:ui';
 
 import 'package:llminator/chatbot.dart';
-import 'package:llminator/home.dart';
 import 'package:llminator/compare.dart';
 
 void main() {
@@ -53,11 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // const HomeScreen(),
   ];
 
-  // final List<String> _titles = [
-  //   'Dashboard',
-  //   'Comparison',
-  // ];
-
   void _onTabSelected(int index) {
     setState(() {
       _currentIndex = index;
@@ -91,26 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
-
-    // Navigator.of(context).push(
-    //   PageRouteBuilder(
-    //     pageBuilder: (context, animation, secondaryAnimation) => ChatBotPanel(),
-    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //       const begin = Offset(1.0, 0);
-    //       const end = Offset(0.5, 0);
-    //       const curve = Curves.easeInOut;
-
-    //       var tween =
-    //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-    //       var offsetAnimation = animation.drive(tween);
-
-    //       return SlideTransition(
-    //         position: offsetAnimation,
-    //         child: child,
-    //       );
-    //     },
-    //   ),
-    // );
   }
 
   @override
@@ -119,28 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('LLMinators Election Prediction'),
-          // actions: <Widget>[
-          //   TextButton(
-          //     // style: style,
-          //     onPressed: () => _onTabSelected(0),
-          //     child: const Text('Dashboard'),
-          //   ),
-          //   TextButton(
-          //     // style: style,
-          //     // onPressed: () => _onTabSelected(1),
-          //     onPressed: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) =>
-          //               CompareScreenGenerator(scrollToComparison: true),
-          //         ),
-          //       );
-          //     },
-          //     child: const Text('Candidate Comparison'),
-          //   ),
-          // ],
+          title: Text('Right Vote'),
+          leading: Icon(Icons.how_to_vote),
+          backgroundColor: Colors.transparent,
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showChatBotPanel(context),

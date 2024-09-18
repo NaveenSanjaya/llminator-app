@@ -1,3 +1,8 @@
+/*
+Right Vote - A web app for election prediction and manifesto comparison with machine learning and NLP.
+Nilakna Warushavithana, September 2024
+*/
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,34 +21,31 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
 
   void getAnswer() async {
     final url = "https://85a9-35-196-250-8.ngrok-free.app/ask";
-    // "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
     final uri = Uri.parse(url);
-    // List<Map<String, String>> msg = [];
-    // for (var i = 0; i < _chatHistory.length; i++) {
-    //   msg.add({"content": _chatHistory[i]["message"]});
-    // }
-
-    // Map<String, dynamic> request = {
-    //   "question": _chatController.text,
-    // };
 
     try {
       final response = await http.post(
         uri,
-        headers: {"Content-Type": "application/json"}, // Added headers
-        // body: jsonEncode(request),
-        body: jsonEncode({"question": _chatController.text}),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(<String, String>{
+          "question": _chatController.text
+        }), //send the question to the server
       );
+
+      //for debugging the http request and reponse
+      // print("Request Body: ${jsonEncode(<String, String>{
+      //       'question': _chatController.text
+      //     })}");
+      // print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
           _chatHistory.add({
             "time": DateTime.now(),
-            // "message": data["candidates"][0]["content"],
             "message": data["answer"],
             "isSender": false,
-          });
+          }); //update chat history with the answer
         });
 
         // Ensure scrolling happens after the state has been updated
@@ -57,8 +59,8 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
           }
         });
       } else {
-        print("Error: ${response.statusCode}");
-        print(response.body);
+        // print("Error: ${response.statusCode}"); //debugging
+        // print(response.body); //debugging
         setState(() {
           _chatHistory.add({
             "time": DateTime.now(),
@@ -68,7 +70,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
         });
       }
     } catch (e) {
-      print("Exception: $e");
+      // print("Exception: $e"); //debugging
       setState(() {
         _chatHistory.add({
           "time": DateTime.now(),
@@ -173,13 +175,13 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
                             "message": _chatController.text,
                             "isSender": true,
                           });
+                          getAnswer();
                           _chatController.clear();
                         }
                       });
                       _scrollController.jumpTo(
                         _scrollController.position.maxScrollExtent,
                       );
-                      getAnswer();
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
@@ -210,130 +212,3 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
     );
   }
 }
-
-// class GradientText extends StatelessWidget {
-//   const GradientText(
-//     this.text, {
-//     required this.gradient,
-//     this.style,
-//   });
-
-//   final String text;
-//   final TextStyle? style;
-//   final Gradient gradient;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ShaderMask(
-//       blendMode: BlendMode.srcIn,
-//       shaderCallback: (bounds) => gradient.createShader(
-//         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-//       ),
-//       child: Text(text, style: style),
-//     );
-//   }
-// }
-
-/////////////////////////////////////////////////////////////////////
-
-
-// class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
-//   final TextEditingController _chatController = TextEditingController();
-//   final List<Map<String, dynamic>> _chatHistory = [];
-
-//   final String apiUrl =
-//       ''; // Replace with your Firebase function URL /////////////////
-
-//   void _sendMessage(String message) async {
-//     if (message.isEmpty) return;
-
-//     setState(() {
-//       _chatHistory.add({"message": message, "isSender": true});
-//     });
-
-//     // Clear the text field
-//     _chatController.clear();
-
-//     // Call the Firebase function API
-//     try {
-//       final response = await http.post(
-//         Uri.parse(apiUrl + '/chatbot'),
-//         headers: {'Content-Type': 'application/json'},
-//         body: jsonEncode({"message": message}),
-//       );
-
-//       if (response.statusCode == 200) {
-//         final Map<String, dynamic> responseData = json.decode(response.body);
-//         setState(() {
-//           _chatHistory
-//               .add({"message": responseData['response'], "isSender": false});
-//         });
-//       } else {
-//         setState(() {
-//           _chatHistory.add({
-//             "message": "Error: Could not get response from AI.",
-//             "isSender": false
-//           });
-//         });
-//       }
-//     } catch (error) {
-//       setState(() {
-//         _chatHistory.add({"message": "Error: $error", "isSender": false});
-//       });
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('ChatBot'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Expanded(
-//               child: ListView.builder(
-//                 itemCount: _chatHistory.length,
-//                 itemBuilder: (context, index) {
-//                   final chat = _chatHistory[index];
-//                   return Align(
-//                     alignment: chat['isSender']
-//                         ? Alignment.centerRight
-//                         : Alignment.centerLeft,
-//                     child: Container(
-//                       padding: EdgeInsets.all(10),
-//                       margin: EdgeInsets.symmetric(vertical: 5),
-//                       decoration: BoxDecoration(
-//                         color: chat['isSender']
-//                             ? Colors.blue[100]
-//                             : Colors.grey[300],
-//                         borderRadius: BorderRadius.circular(10),
-//                       ),
-//                       child: Text(chat['message']),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//             TextField(
-//               controller: _chatController,
-//               decoration: InputDecoration(
-//                 labelText: 'Enter your question',
-//                 border: OutlineInputBorder(),
-//               ),
-//               onSubmitted: (value) {
-//                 _sendMessage(value);
-//               },
-//             ),
-//             SizedBox(height: 10),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// reference: https://medium.com/google-developer-experts/building-an-ai-chatbot-using-flutter-with-makersuite-and-palm-api-a-step-by-step-guide-5899b5abd75
