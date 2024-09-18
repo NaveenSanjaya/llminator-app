@@ -1,3 +1,8 @@
+/*
+Right Vote - A web app for election prediction and manifesto comparison with machine learning and NLP.
+Nilakna Warushavithana, September 2024
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   // state and logic
-  notifyListeners();
+  // notifyListeners();
 }
 
 class MyHomePage extends StatefulWidget {
