@@ -20,7 +20,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   List<Map<String, dynamic>> _chatHistory = [];
 
   void getAnswer() async {
-    final url = "https://85a9-35-196-250-8.ngrok-free.app/ask";
+    final url = "https://dab5-34-124-250-167.ngrok-free.app/ask";
     final uri = Uri.parse(url);
 
     try {
