@@ -21,21 +21,21 @@ class CompareScreenGenerator extends StatefulWidget {
 class _CompareScreenState extends State<CompareScreenGenerator> {
   final List<Map<String, dynamic>> _comparisonData = [
     {
-      "Candidate1": {
+      "Anura": {
         "Economy": "Pro-market policies",
         "Healthcare": "Universal healthcare",
         "Education": "Increase funding for schools",
       },
     },
     {
-      "Candidate2": {
+      "Sajith": {
         "Economy": "Regulation-focused",
         "Healthcare": "Private healthcare",
         "Education": "Voucher system",
       },
     },
     {
-      "Candidate3": {
+      "Ranil": {
         "Economy": "2-Regulation-focused",
         "Healthcare": "2-Private healthcare",
         "Education": "2 -Voucher system",
@@ -168,6 +168,165 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
   //   );
   // }
 
+  final _themeTopics = <List>[
+    [
+      'Public and Micro Finance',
+      'Industries',
+      'Technology',
+      'Legal Reform',
+      'Housing and Construction',
+      'Trade, Business, and SMEs',
+      'Public Administration'
+    ],
+    [
+      'Industries',
+      'Housing and Construction',
+      'Technology',
+      'Land',
+      'Transportation',
+      'Power and Energy',
+      'Justice System',
+      'Science and Research',
+      'Mass Media',
+      'Public and Micro Finance',
+      'Water Supply',
+      'Ports and Shipping',
+      'Environmental Conservation and Mitigating Pollution',
+      'Urban Development',
+      'Legal Reform',
+      'Aviation',
+      'Labour Welfare and Regulation',
+      'Disaster Management',
+      'Public Administration'
+    ],
+    [
+      'Child Development and Women\'s Affairs',
+      'Labour Welfare and Regulation',
+      'Community Support',
+      'Public and Micro Finance',
+      'Healthcare',
+      'Transportation',
+      'National Security',
+      'Housing and Construction',
+      'Foreign Affairs',
+      'Public Administration',
+      'Justice System',
+      'Urban Development'
+    ],
+    [
+      'Sports Affairs',
+      'Cultural and Religious Affairs',
+      'Environmental Conservation and Mitigating Pollution',
+      'Public and Micro Finance',
+      'Foreign Employment',
+      'Parliament, Provincial Councils and Local Government',
+      'Mass Media',
+      'Foreign Affairs',
+      'Primary and Secondary Education',
+      'Public Administration',
+      'Water Supply',
+      'Trade, Business, and SMEs',
+      'Healthcare',
+      'SOE Reform'
+    ],
+    [
+      'Livestock',
+      'Plantation Industries',
+      'Fisheries and Aquatic Resources',
+      'Trade, Business, and SMEs',
+      'Traditional and Modern Agriculture',
+      'Technology',
+      'Water Supply',
+      'Labour Welfare and Regulation',
+      'Public and Micro Finance',
+      'Land'
+    ],
+    [
+      'SOE Reform',
+      'Parliament, Provincial Councils and Local Government',
+      'Public Administration',
+      'Land',
+      'Public and Micro Finance',
+      'Technology',
+      'Youth Affairs and Skills',
+      'Legal Reform',
+      'Foreign Affairs',
+      'Power and Energy'
+    ],
+    [
+      'Public and Micro Finance',
+      'Tourism',
+      'Economic and Investment Zones',
+      'Trade, Business, and SMEs'
+    ],
+    [
+      'Legal Reform',
+      'Justice System',
+      'National Security',
+      'Legal Enforcement',
+      'Police',
+      'Power and Energy',
+      'Parliament, Provincial Councils and Local Government',
+      'Cultural and Religious Affairs',
+      'Child Development and Women\'s Affairs',
+      'Healthcare',
+      'Rehabilitation and Prisons Reform'
+    ],
+    [
+      'Public Administration',
+      'Labour Welfare and Regulation',
+      'Youth Affairs and Skills',
+      'Foreign Employment',
+      'Child Development and Women\'s Affairs',
+      'Community Support'
+    ],
+    [
+      'Vocational Development',
+      'Higher Education',
+      'Primary and Secondary Education',
+      'Youth Affairs and Skills',
+      'Child Development and Women\'s Affairs',
+      'Labour Welfare and Regulation',
+      'Healthcare',
+      'Technology',
+      'Mass Media',
+      'Science and Research'
+    ],
+    [
+      'Vocational Development',
+      'Higher Education',
+      'Primary and Secondary Education',
+      'Youth Affairs and Skills',
+      'Child Development and Women\'s Affairs',
+      'Labour Welfare and Regulation',
+      'Healthcare',
+      'Technology',
+      'Mass Media',
+      ' Science and Research'
+    ],
+    [
+      'Legal Enforcement',
+      'Justice System',
+      'Public Administration',
+      'Legal Reform',
+      'Public and Micro Finance'
+    ],
+    [
+      'Healthcare',
+      'Medical Staff and Hospitals',
+      'Medicine',
+      'Indigenous Medicine',
+      'Child Development and Women\'s Affairs'
+    ],
+    ['Public and Micro Finance', 'Public Administration'],
+    [
+      'Legal Enforcement',
+      'Cultural and Religious Affairs',
+      'Land',
+      'Community Support'
+    ],
+  ];
+
   Widget _buildComparisonTable() {
     if (_comparisonData.isEmpty) {
       return Center(child: CircularProgressIndicator());
@@ -178,30 +337,35 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
           columns: [
             DataColumn(
                 label: Text(
-              'Category',
+              'Theme',
               style: TextStyle(fontWeight: FontWeight.bold),
             )),
             DataColumn(
-                label: Text(_comparisonNames[0],
+                label: Text(_comparisonNames[0] + ' \%',
                     style: TextStyle(fontWeight: FontWeight.bold))),
             DataColumn(
-                label: Text(_comparisonNames[1],
+                label: Text(_comparisonNames[1] + ' \%',
                     style: TextStyle(fontWeight: FontWeight.bold))),
             DataColumn(
-                label: Text(_comparisonNames[2],
+                label: Text(_comparisonNames[2] + ' \%',
                     style: TextStyle(fontWeight: FontWeight.bold))),
             DataColumn(
-                label: Text('Better',
+                label: Text('Focused Areas',
                     style: TextStyle(fontWeight: FontWeight.bold))),
           ],
           rows: List<DataRow>.generate(
-              (_comparisonCategories.length),
+              (_themes.length),
               (index) => DataRow(cells: [
-                    DataCell(Text(_comparisonCategories[index])),
-                    DataCell(Text(_comparisonContent[0][index])),
-                    DataCell(Text(_comparisonContent[1][index])),
-                    DataCell(Text(_comparisonContent[2][index])),
-                    DataCell(Text(_comparisonBetter[0][index])),
+                    DataCell(Text(_themes[index])),
+                    DataCell(Text(_scoresAnura[index].toString().toString())),
+                    DataCell(Text(_scoresSajith[index].toString())),
+                    DataCell(Text(_scoresRanil[index].toString())),
+                    DataCell(Text(_themeTopics[index].toString())),
+                    // DataCell(Text(_comparisonCategories[index])),
+                    // DataCell(Text(_comparisonContent[0][index])),
+                    // DataCell(Text(_comparisonContent[1][index])),
+                    // DataCell(Text(_comparisonContent[2][index])),
+                    // DataCell(Text(_comparisonBetter[0][index])),
                   ])),
         ));
   }
@@ -402,7 +566,7 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
         children: [
           _secondVotesChart(),
           Text(
-            'Based on First Vote',
+            'Based on First and Second Votes',
             style: TextStyle(
               fontSize: 16.0,
               // fontWeight: FontWeight.bold
@@ -424,8 +588,212 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
         color: const Color.fromRGBO(225, 245, 254, 0.75),
       ),
       alignment: Alignment.center,
-      child: _buildComparisonTable(),
+      child: Column(children: [_buildComparisonTable()]),
     );
+  }
+
+  Widget _comparisonScoreBox() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.0),
+      margin: EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: const Color.fromRGBO(225, 245, 254, 0.75),
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: _comparisonScoreChart(),
+          ),
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                _selectThemes(),
+                SizedBox(height: 16.0),
+                Text(
+                    'The Manifesto Comparator scores each candidate based on the volume of policies they offer within key themes, helping you see who aligns with your priorities'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  final _themes = [
+    'Taxation',
+    'Infrastructure',
+    'Social Protection',
+    'Supplementary',
+    'Agricultural',
+    'Governance',
+    'Economic Growth',
+    'Law and Order',
+    'Labour',
+    'Education',
+    'Trade and export',
+    'Corruption',
+    'Health',
+    'IMF Programme',
+    'Reconciliation',
+  ];
+
+  List<int> _selectedIndexes = [];
+  var _comparisonScore = <double>[10, 10, 10];
+  final _scoresAnura = <double>[
+    26,
+    79,
+    51,
+    65,
+    70,
+    28,
+    64,
+    55,
+    36,
+    50,
+    67,
+    39,
+    71,
+    40,
+    0
+  ];
+  final _scoresSajith = <double>[
+    74,
+    16,
+    33,
+    19,
+    20,
+    52,
+    14,
+    35,
+    50,
+    27,
+    25,
+    57,
+    21,
+    40,
+    17
+  ];
+  final _scoresRanil = <double>[
+    0,
+    5,
+    16,
+    16,
+    10,
+    20,
+    22,
+    10,
+    14,
+    23,
+    8,
+    4,
+    8,
+    20,
+    83
+  ];
+
+  void _onThemeSelected(int index) {
+    setState(() {
+      // If already selected, remove from the list, otherwise add
+      if (_selectedIndexes.contains(index)) {
+        _selectedIndexes.remove(index);
+      } else {
+        _selectedIndexes.add(index);
+      }
+      _updateComparisonScore();
+    });
+  }
+
+  void _updateComparisonScore() {
+    double sumAnura = 0;
+    double sumSajith = 0;
+    double sumRanil = 0;
+
+    // Calculate the sum of scores for selected indexes for each candidate
+    for (int index in _selectedIndexes) {
+      sumAnura += _scoresAnura[index];
+      sumSajith += _scoresSajith[index];
+      sumRanil += _scoresRanil[index];
+    }
+
+    // get percentage values
+    double totalScore = sumAnura + sumSajith + sumRanil;
+
+    double percentageAnura =
+        totalScore != 0 ? (sumAnura / totalScore) * 100 : 0;
+    double percentageSajith =
+        totalScore != 0 ? (sumSajith / totalScore) * 100 : 0;
+    double percentageRanil =
+        totalScore != 0 ? (sumRanil / totalScore) * 100 : 0;
+    // Update _comparisonScore list
+    _comparisonScore = [percentageAnura, percentageSajith, percentageRanil];
+  }
+
+  Widget _selectThemes() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        spacing: 8.0, // space between buttons
+        runSpacing: 8.0, // space between rows
+        children: List.generate(_themes.length, (index) {
+          return ChoiceChip(
+            label: Text(_themes[index]),
+            selected: _selectedIndexes.contains(index),
+            onSelected: (bool selected) {
+              _onThemeSelected(index);
+            },
+          );
+        }),
+      ),
+    );
+  }
+
+  _comparisonScoreChart() {
+    Map<String, double> dataMap = {
+      "Anura": _comparisonScore[0], // put the actual value here
+      "Sajith": _comparisonScore[1],
+      "Ranil": _comparisonScore[2],
+    };
+
+    final colorList = <Color>[
+      Colors.pinkAccent,
+      // Colors.yellow,
+      Colors.green,
+      Colors.yellow,
+    ];
+
+    return SizedBox(
+        height: 200, // Set height for the pie chart
+        child: PieChart(
+          dataMap: dataMap,
+          // animationDuration: Duration(milliseconds: 800),
+          chartLegendSpacing: 32,
+          // chartRadius: MediaQuery.of(context).size.width / 4,
+          colorList: colorList,
+          initialAngleInDegree: -90,
+          chartType: ChartType.disc,
+          ringStrokeWidth: 32,
+          legendOptions: const LegendOptions(
+            // showLegendsInRow: true,
+            legendPosition: LegendPosition.right,
+            showLegends: true,
+            legendShape: BoxShape.circle,
+            legendTextStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              // backgroundColor: Colors.white,
+            ),
+          ),
+          chartValuesOptions: const ChartValuesOptions(
+            showChartValueBackground: true,
+            showChartValues: true,
+            showChartValuesInPercentage: false,
+            showChartValuesOutside: false,
+          ),
+        ));
   }
 
   @override
@@ -471,6 +839,7 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
                       color: Colors.white),
                 ),
                 SizedBox(height: 16.0), // Add some spacing
+                _comparisonScoreBox(),
                 // _selectCandidateButton(), /// to choose candidates from if manifestos trained for all the candidates
                 // SizedBox(height: 16.0),
                 _comparisonTableBox(),
