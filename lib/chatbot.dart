@@ -15,37 +15,68 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   List<Map<String, dynamic>> _chatHistory = [];
 
   void getAnswer() async {
-    final url = "https://d0b7-34-106-77-139.ngrok-free.app";
+    final url = "https://85a9-35-196-250-8.ngrok-free.app/ask";
     // "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=<INSERT API KEY>";
     final uri = Uri.parse(url);
-    List<Map<String, String>> msg = [];
-    for (var i = 0; i < _chatHistory.length; i++) {
-      msg.add({"content": _chatHistory[i]["message"]});
-    }
+    // List<Map<String, String>> msg = [];
+    // for (var i = 0; i < _chatHistory.length; i++) {
+    //   msg.add({"content": _chatHistory[i]["message"]});
+    // }
 
-    Map<String, dynamic> request = {
-      "prompt": {
-        "messages": [msg]
-      },
-      "temperature": 0.25,
-      "candidateCount": 1,
-      "topP": 1,
-      "topK": 1
-    };
+    // Map<String, dynamic> request = {
+    //   "question": _chatController.text,
+    // };
 
-    final response = await http.post(uri, body: jsonEncode(request));
+    try {
+      final response = await http.post(
+        uri,
+        headers: {"Content-Type": "application/json"}, // Added headers
+        // body: jsonEncode(request),
+        body: jsonEncode({"question": _chatController.text}),
+      );
 
-    setState(() {
-      _chatHistory.add({
-        "time": DateTime.now(),
-        "message": json.decode(response.body)["candidates"][0]["content"],
-        "isSender": false,
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _chatHistory.add({
+            "time": DateTime.now(),
+            // "message": data["candidates"][0]["content"],
+            "message": data["answer"],
+            "isSender": false,
+          });
+        });
+
+        // Ensure scrolling happens after the state has been updated
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_scrollController.hasClients) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          }
+        });
+      } else {
+        print("Error: ${response.statusCode}");
+        print(response.body);
+        setState(() {
+          _chatHistory.add({
+            "time": DateTime.now(),
+            "message": "Error: ${response.statusCode}",
+            "isSender": false,
+          });
+        });
+      }
+    } catch (e) {
+      print("Exception: $e");
+      setState(() {
+        _chatHistory.add({
+          "time": DateTime.now(),
+          "message": "Exception: $e",
+          "isSender": false,
+        });
       });
-    });
-
-    _scrollController.jumpTo(
-      _scrollController.position.maxScrollExtent,
-    );
+    }
   }
 
   @override
@@ -64,7 +95,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
             height: MediaQuery.of(context).size.height - 160,
             child: ListView.builder(
               itemCount: _chatHistory.length,
-              shrinkWrap: false,
+              // shrinkWrap: false,
               controller: _scrollController,
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               physics: const BouncingScrollPhysics(),
@@ -155,7 +186,7 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
                     padding: const EdgeInsets.all(0.0),
                     child: Ink(
                       decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 187, 222, 251),
+                        color: Colors.blue,
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       ),
                       child: Container(
@@ -180,28 +211,28 @@ class _ChatBotPanelState extends State<ChatBotPanelGenerator> {
   }
 }
 
-class GradientText extends StatelessWidget {
-  const GradientText(
-    this.text, {
-    required this.gradient,
-    this.style,
-  });
+// class GradientText extends StatelessWidget {
+//   const GradientText(
+//     this.text, {
+//     required this.gradient,
+//     this.style,
+//   });
 
-  final String text;
-  final TextStyle? style;
-  final Gradient gradient;
+//   final String text;
+//   final TextStyle? style;
+//   final Gradient gradient;
 
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => gradient.createShader(
-        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-      ),
-      child: Text(text, style: style),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ShaderMask(
+//       blendMode: BlendMode.srcIn,
+//       shaderCallback: (bounds) => gradient.createShader(
+//         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+//       ),
+//       child: Text(text, style: style),
+//     );
+//   }
+// }
 
 /////////////////////////////////////////////////////////////////////
 

@@ -153,9 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class HomeScreen extends HomeScreenGenerator {
-  const HomeScreen({super.key});
-}
+// class HomeScreen extends HomeScreenGenerator {
+//   const HomeScreen({super.key});
+// }
 
 class CompareScreen extends CompareScreenGenerator {
   const CompareScreen({super.key});

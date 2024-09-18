@@ -66,9 +66,9 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
 
   final String apiUrl_winpredict =
       'YOUR_FIREBASE_FUNCTION_URL_HERE'; // Replace with your Firebase function URL
-  double anuraWinPercentage = 41;
-  double ranilWinPercentage = 22;
-  double sajithWinPercentage = 24;
+  double anuraWinPercentage = 39.57;
+  double ranilWinPercentage = 21.36;
+  double sajithWinPercentage = 32.12;
   bool isLoading = true;
 
   final ScrollController _scrollController = ScrollController();
@@ -194,15 +194,15 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
 
     Map<String, double> dataMap = {
       "Anura": anuraWinPercentage,
-      "Ranil": ranilWinPercentage,
       "Sajith": sajithWinPercentage,
+      "Ranil": ranilWinPercentage,
       "Others": othersWinPercentage,
     };
 
     final colorList = <Color>[
       Colors.pinkAccent,
-      Colors.yellow,
       Colors.green,
+      Colors.yellow,
       Colors.grey,
     ];
 
@@ -243,16 +243,16 @@ class _CompareScreenState extends State<CompareScreenGenerator> {
         100 - (anuraWinPercentage + ranilWinPercentage + sajithWinPercentage);
 
     Map<String, double> dataMap = {
-      "Anura": anuraWinPercentage, // put the actual value here
-      "Ranil": ranilWinPercentage,
-      // "Sajith": sajithWinPercentage,
+      "Anura": 44.27, // put the actual value here
+      "Sajith": 39.59,
+      // "Ranil": ranils,
       "Others": othersWinPercentage,
     };
 
     final colorList = <Color>[
       Colors.pinkAccent,
-      Colors.yellow,
-      // Colors.green,
+      // Colors.yellow,
+      Colors.green,
       Colors.grey,
     ];
 
